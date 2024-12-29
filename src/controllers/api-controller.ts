@@ -4,7 +4,7 @@ import { fetchWeatherData } from '../services/api-service';
 export const getWeatherData = async (req: Request, res: Response): Promise<void> => {
   try {
     // Use coordinates from query parameters
-    const { lat, lon } = req.query;
+    const { lat, lon } = req.body;
 
     if (!lat || !lon) {
       res.status(400).json({ error: 'Latitude and Longitude are required' });

@@ -4,6 +4,6 @@ import { getWeatherData } from '../controllers/api-controller';
 const apiRoutes: Router = Router();
 
 // Route to fetch weather data
-apiRoutes.get('/weather', getWeatherData);
+apiRoutes.post('/weather', getWeatherData);
 
 export default apiRoutes;
