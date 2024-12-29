@@ -119,5 +119,6 @@
     "esModuleInterop": true,
     "noImplicitAny": false
   },
+  "include": ["src/**/*.ts", "custom.d.ts"],
   "exclude": ["node_modules"]
 }

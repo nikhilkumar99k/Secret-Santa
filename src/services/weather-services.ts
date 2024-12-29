@@ -28,6 +28,7 @@ export const fetchWeatherData = async (latitude: string, longitude: string): Pro
       temp_c: current.temp_c,
       region: `${location.name}, ${location.region}, ${location.country}`,
     };
+    console.log('locationData', locationData);
     await saveLocationData(locationData);
     return response.data;
   } catch (error) {

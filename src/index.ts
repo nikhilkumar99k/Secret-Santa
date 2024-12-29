@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import apiRoutes from './routers/api-route';
+import apiRoutes from './routers/base';
 import { connectToMongo } from './mongoDb';
 
 const app: Application = express();

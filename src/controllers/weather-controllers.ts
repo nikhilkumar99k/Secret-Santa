@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { fetchWeatherData } from '../services/api-service';
+import { fetchWeatherData } from '../services/weather-services';
 
 export const getWeatherData = async (req: Request, res: Response): Promise<void> => {
   try {
