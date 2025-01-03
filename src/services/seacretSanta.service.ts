@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { Group, Groups } from '../mongoDb/models/groups';
 import { MongoService } from '../mongoDb/services/mongoService';
-import { SeacterMatches } from '../mongoDb/models/seacretMatches';
-import { shuffleArray } from '../helper/fisherYatesAlgorithm';
 import { Users } from '../mongoDb/models/users';
+import { SeacterMatches } from '../mongoDb/models/seacretMatches';
+import { shuffleArray } from '../util';
 
 export const createGroupService = async (
   admin: mongoose.Types.ObjectId,

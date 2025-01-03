@@ -1,10 +1,10 @@
 // authMiddleware.ts
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { CustomRequestWithUser } from '../types/request-type';
+import { CustomRequestWithUser } from '../types/request.type';
 import { MongoService } from '../mongoDb/services/mongoService';
 import { Users } from '../mongoDb/models/users';
-import { TokenPayload } from '../types/auth-response';
+import { TokenPayload } from '../types/auth.response';
 
 const SECRET_KEY = process.env.JWT_SECRET as string;
 

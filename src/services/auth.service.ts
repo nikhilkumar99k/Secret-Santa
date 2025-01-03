@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Users } from '../mongoDb/models/users';
-import { LoginResponse, TokenPayload } from '../types/auth-response';
+import { LoginResponse, TokenPayload } from '../types/auth.response';
 import { MongoService } from '../mongoDb/services/mongoService';
 
 // Function to register a user

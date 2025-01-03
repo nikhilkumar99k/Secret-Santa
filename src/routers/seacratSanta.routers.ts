@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { authMiddleware, checkUser } from '../middlewares/auth-middleware';
+import { authMiddleware, checkUser } from '../middlewares/auth';
 import { addInGroups, createSecretSantaGroup, getAllGroups, getMyMatch, getOneGroup, makeMatches, makeMatchesVisible } from '../controllers/seacretSanta.controllers';
 
 const seacterSantaRouter: Router = express.Router();

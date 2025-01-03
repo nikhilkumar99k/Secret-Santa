@@ -1,25 +1,19 @@
-import express, { Application } from 'express';
-import apiRoutes from './routers/base';
+import dotenv from 'dotenv';
+import app from './app';
 import { connectToMongo } from './mongoDb';
 
-const app: Application = express();
+// Load environment variables
+dotenv.config();
 
-// Middleware to parse JSON
-app.use(express.json());
-
-// Route handling
-app.use('/api', apiRoutes);
-
-// Connect to MongoDB and start the server
 const startServer = async () => {
   try {
     await connectToMongo();
-    const PORT = 3000;
+    const PORT = process.env.PORT || 5001;
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
+    console.error('Failed to start server:', error);
   }
 };
 
