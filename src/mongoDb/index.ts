@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const uri = process.env.MONGO_URI as string;
-console.log("Mongo db", uri)
+
 export const connectToMongo = async () => {
         await mongoose.connect(uri)
         .then(async () => {

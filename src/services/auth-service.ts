@@ -2,18 +2,17 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Users } from '../mongoDb/models/users';
-import { LoginResponse } from '../types/auth-response';
+import { LoginResponse, TokenPayload } from '../types/auth-response';
 import { MongoService } from '../mongoDb/services/mongoService';
 
 // Function to register a user
-export const registerUser = async (name: string, user_id: string, password: string): Promise<void> => {
+export const registerUser = async (name: string, username: string, password: string): Promise<void> => {
     try {
         // Check if user_id already exists
-        const existingUser = await Users.findOne({ user_id });
+        const existingUser = await Users.findOne({ username });
         if (existingUser) {
             throw new Error('User ID already exists');
         }
-
         // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -21,7 +20,7 @@ export const registerUser = async (name: string, user_id: string, password: stri
         // Create a new user and save to the database
         const newUser = new Users({
             name,
-            user_id,
+            username,
             password: hashedPassword,
         });
 
@@ -37,9 +36,9 @@ export const registerUser = async (name: string, user_id: string, password: stri
 };
 
 // Function to authenticate a user
-export const authenticateUser = async (user_id: string, password: string): Promise<LoginResponse | null> => {
+export const authenticateUser = async (username: string, password: string): Promise<LoginResponse | null> => {
     // Find user by user_id
-    const user = await Users.findOne({ user_id });
+    const user = await MongoService.findOne(Users, { username });
     const SECRET_KEY = process.env.JWT_SECRET as string;
 
     if (!user) {
@@ -52,20 +51,20 @@ export const authenticateUser = async (user_id: string, password: string): Promi
         throw new Error('Invalid password');
     }
 
-    // Generate JWT token
-    const token = jwt.sign(
-        {
-            user_id: user.user_id,
-            name: user.name,
-        },
-        SECRET_KEY, // Use an environment variable for secret
-        { expiresIn: '3h' } // Token expiration time (3 hour)
-    );
+    // Create token payload
+    const tokenPayload: TokenPayload = {
+        username: user.username,
+        name: user.name,
+        id: user._id.toString(), // Convert ObjectId to string
+    };
+
+    // Generate JWT token with expiration (3 hours)
+    const token = jwt.sign(tokenPayload, SECRET_KEY, { expiresIn: '3h' });
 
     return {
         token,
         user: {
-            user_id: user_id,
+            username: user.username,
             name: user.name,
         },
     };

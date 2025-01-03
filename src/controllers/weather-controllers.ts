@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { fetchWeatherData } from '../services/weather-services';
+import { CustomRequestWithUser } from '../types/request-type';
 
-export const getWeatherData = async (req: Request, res: Response): Promise<void> => {
+export const getWeatherData = async (req: CustomRequestWithUser, res: Response): Promise<void> => {
   try {
+    const user = req.user;
     // Use coordinates from query parameters
     const { lat, lon } = req.body;
 
