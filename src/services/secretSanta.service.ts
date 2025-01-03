@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Group, Groups } from '../mongoDb/models/groups';
 import { MongoService } from '../mongoDb/services/mongoService';
 import { Users } from '../mongoDb/models/users';
-import { SeacterMatches } from '../mongoDb/models/seacretMatches';
+import { SecterMatches } from '../mongoDb/models/secretMatches';
 import { shuffleArray } from '../util';
 
 export const createGroupService = async (
@@ -112,7 +112,7 @@ export const makeMatchesService = async (
     const seacretMatches = await makeMatchesAlgo(group.members);
 
     // Store matches in SeacterMatches collection
-    const newSeacterMatches = new SeacterMatches({
+    const newSeacterMatches = new SecterMatches({
       group_id: groupId,
       matches: seacretMatches,
     });
@@ -231,7 +231,7 @@ export const makeMatchesVisibleService = async (
   
       // Check if the user is admin or matches are visible
       if (group.matches_visible || group.admin.toString() !== userId.toString()) {
-        const matches = await SeacterMatches.findOne({ group_id: groupId });
+        const matches = await SecterMatches.findOne({ group_id: groupId });
         response.matches = matches?.matches || null;
       }
   
@@ -270,7 +270,7 @@ export const makeMatchesVisibleService = async (
       }
   
       // Retrieve matches for the group
-      const matches = await SeacterMatches.findOne({ group_id: groupId });
+      const matches = await SecterMatches.findOne({ group_id: groupId });
       if (!matches) {
         throw new Error('Matches are not created for this group');
       }

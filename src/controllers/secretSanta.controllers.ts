@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import mongoose from 'mongoose';
 import { CustomRequestWithUser } from '../types/request.type';
-import { addInGroupService, createGroupService, fetchGroupService, getAllGroupsService, getMyMatchService, makeMatchesService, makeMatchesVisibleService } from '../services/seacretSanta.service';
+import { addInGroupService, createGroupService, fetchGroupService, getAllGroupsService, getMyMatchService, makeMatchesService, makeMatchesVisibleService } from '../services/secretSanta.service';
 
 
 export const createSecretSantaGroup = async (
