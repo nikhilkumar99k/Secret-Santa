@@ -295,3 +295,17 @@ export const makeMatchesVisibleService = async (
     }
   };
   
+
+  export const getUserById = async (userId) => {
+    try {
+      const user = await Users.findById(userId);
+      console.log(user,userId);
+      if (!user) {
+        return null;
+      }
+      return {name: user.name, username: user.username};
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+  };

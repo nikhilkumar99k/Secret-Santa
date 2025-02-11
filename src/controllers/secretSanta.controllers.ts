@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import mongoose from 'mongoose';
 import { CustomRequestWithUser } from '../types/request.type';
-import { addInGroupService, createGroupService, fetchGroupService, getAllGroupsService, getMyMatchService, makeMatchesService, makeMatchesVisibleService } from '../services/secretSanta.service';
+import { addInGroupService, createGroupService, fetchGroupService, getAllGroupsService, getMyMatchService, makeMatchesService, makeMatchesVisibleService, getUserById } from '../services/secretSanta.service';
 
 
 export const createSecretSantaGroup = async (
@@ -286,4 +286,47 @@ export const makeMatchesVisible = async (
       });
     }
   };
+
+  export const getMember = async (
+    req: CustomRequestWithUser,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Check if the user is authenticated
+      const user = req.user;
+  
+      if (!user || !user.id) {
+        res.status(401).json({ message: 'User not authenticated' });
+        return;
+      }
+  
+      const { member_id: memberId } = req.body;
+
+      if (!memberId) {
+        res.status(400).json({ message: 'Valid member ID is required' });
+        return;
+      }
+  
+      const memberDetails = await getUserById(memberId);
+  
+      if (!memberDetails) {
+        res.status(404).json({ message: 'Member not found' });
+        return;
+      }
+  
+      // Respond with the member details
+      res.status(200).json({
+        message: 'Member details retrieved successfully',
+        memberDetails,
+      });
+    } catch (error: any) {
+      // Log the error and respond with a failure message
+      console.error('Error retrieving member details:', error.message); // Log full error for debugging
+      res.status(500).json({
+        error: 'Failed to retrieve member details',
+        details: error.message,
+      });
+    }
+  };
+
   
